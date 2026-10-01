@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Clientes · Panel · Punto POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/tokens.css" />
+<link rel="stylesheet" href="../css/app.css" />
+<script src="../vendor/tailwind.js"></script>
+<script src="../js/tw.js"></script>
+</head>
+<body data-shell="admin" data-page="clientes" data-title="Clientes">
+
+<main data-page="clientes" class="view reveal" style="--i:0">
+  <div class="view__head">
+    <div>
+      <h2>Clientes</h2>
+      <p class="view__sub">Ficha de quienes compran. Se asocian a la boleta al momento de cobrar.</p>
+    </div>
+    <button class="btn btn--primary" type="button" id="btn-nuevo-cliente">Nuevo cliente</button>
+  </div>
+
+  <div class="filters">
+    <div class="field">
+      <label class="field__label" for="f-cliente-buscar">Buscar</label>
+      <input class="input" id="f-cliente-buscar" type="search" placeholder="nombre, RUT o correo" />
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>Nombre</th><th>RUT</th><th>Teléfono</th><th>Correo</th><th class="num">Boletas</th><th></th></tr></thead>
+        <tbody id="tbody-clientes"></tbody>
+      </table>
+    </div>
+    <div id="empty-clientes"></div>
+  </div>
+</main>
+
+
+<script src="../js/store.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/clientes.js"></script>
+</body>
+</html>

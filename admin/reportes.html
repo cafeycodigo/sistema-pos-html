@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Reportes de venta · Panel · Punto POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/tokens.css" />
+<link rel="stylesheet" href="../css/app.css" />
+<script src="../vendor/tailwind.js"></script>
+<script src="../js/tw.js"></script>
+</head>
+<body data-shell="admin" data-page="reportes" data-title="Reportes de venta">
+
+<main data-page="reportes" class="view reveal" style="--i:0">
+  <div class="view__head">
+    <div>
+      <h2>Reportes de venta</h2>
+      <p class="view__sub">Ventas por producto, por vendedor y por fecha. Los totales se recalculan con los filtros de abajo.</p>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="field">
+      <label class="field__label" for="f-rep-desde">Desde</label>
+      <input class="input" id="f-rep-desde" type="date" />
+    </div>
+    <div class="field">
+      <label class="field__label" for="f-rep-hasta">Hasta</label>
+      <input class="input" id="f-rep-hasta" type="date" />
+    </div>
+    <div class="field">
+      <label class="field__label" for="f-rep-vendedor">Vendedor</label>
+      <select class="input" id="f-rep-vendedor"><option value="">Todos</option></select>
+    </div>
+    <div class="field">
+      <label class="field__label" for="f-rep-cat">Categoría</label>
+      <select class="input" id="f-rep-cat"><option value="">Todas</option></select>
+    </div>
+    <button class="btn" type="button" id="btn-limpiar-rep">Limpiar filtros</button>
+  </div>
+
+  <div class="stat-strip" id="kpis-reporte"></div>
+
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel__head"><h3>Ventas por producto</h3></div>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Producto</th><th class="num">Unidades</th><th class="num">Ingreso</th><th></th></tr></thead>
+          <tbody id="tbody-rep-producto"></tbody>
+        </table>
+      </div>
+      <div id="empty-rep-producto"></div>
+    </div>
+
+    <div class="stack">
+      <div class="panel">
+        <div class="panel__head"><h3>Ventas por vendedor</h3></div>
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th>Vendedor</th><th class="num">Boletas</th><th class="num">Ingreso</th></tr></thead>
+            <tbody id="tbody-rep-vendedor"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel__head"><h3>Ventas por fecha</h3></div>
+        <div class="table-wrap">
+          <table class="data">
+            <thead><tr><th>Fecha</th><th class="num">Boletas</th><th class="num">Ingreso</th></tr></thead>
+            <tbody id="tbody-rep-fecha"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="../js/store.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/reportes.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Producto · Panel · Punto POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/tokens.css" />
+<link rel="stylesheet" href="../css/app.css" />
+<script src="../vendor/tailwind.js"></script>
+<script src="../js/tw.js"></script>
+</head>
+<body data-shell="admin" data-page="productos" data-title="Producto">
+
+<main data-page="productos" class="view reveal" style="--i:0">
+  <div class="view__head">
+    <div>
+      <p class="label" id="f-modo">Nuevo</p>
+      <h2 id="f-titulo">Producto</h2>
+      <p class="view__sub" id="f-sub">Los cambios se reflejan en el inventario y en el punto de venta.</p>
+    </div>
+    <a class="btn" href="productos.html" id="f-volver">Volver a productos</a>
+  </div>
+
+  <form id="form-producto" novalidate>
+    <input type="hidden" name="registro" />
+    <div class="panel">
+      <div class="panel__head"><h3 id="f-panel">Datos del producto</h3></div>
+      <div class="panel__body form-grid">
+        <div class="field span-2">
+          <label class="field__label" for="p-nombre">Nombre</label>
+          <input class="input" id="p-nombre" name="nombre" placeholder="Agua mineral 1 L" />
+          <p class="field__help" data-hint="Como se imprime en la boleta.">Como se imprime en la boleta.</p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="p-sku">SKU</label>
+          <input class="input mono" id="p-sku" name="sku" placeholder="BEB-001" />
+          <p class="field__help" data-hint="Código corto de identificación.">Código corto de identificación.</p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="p-categoria">Categoría</label>
+          <select class="input" id="p-categoria" name="categoriaId"></select>
+          <p class="field__help" data-hint="Define dónde se filtra el producto.">Define dónde se filtra el producto.</p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="p-precio">Precio (CLP)</label>
+          <input class="input num" id="p-precio" name="precio" type="number" min="0" step="10" placeholder="990" />
+          <p class="field__help" data-hint="Sin decimales, el peso no los usa.">Sin decimales, el peso no los usa.</p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="p-stock">Stock</label>
+          <input class="input num" id="p-stock" name="stock" type="number" min="0" step="1" placeholder="24" />
+          <p class="field__help" data-hint="Unidades disponibles para vender.">Unidades disponibles para vender.</p>
+        </div>
+        <label class="checkline span-2"><input type="checkbox" name="activo" checked /> Producto activo (visible en el punto de venta)</label>
+      </div>
+    </div>
+
+    <div class="form-actions" id="f-acciones">
+      <a class="btn" href="productos.html" id="f-cancelar">Cancelar</a>
+      <a class="btn btn--primary" href="productos.html" id="f-editar" hidden>Editar producto</a>
+      <button class="btn btn--primary" type="submit" id="f-guardar">Guardar producto</button>
+    </div>
+  </form>
+</main>
+
+<script src="../js/store.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/producto.js"></script>
+</body>
+</html>

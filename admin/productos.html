@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Productos · Panel · Punto POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/tokens.css" />
+<link rel="stylesheet" href="../css/app.css" />
+<script src="../vendor/tailwind.js"></script>
+<script src="../js/tw.js"></script>
+</head>
+<body data-shell="admin" data-page="productos" data-title="Productos">
+
+<main data-page="productos" class="view reveal" style="--i:0">
+  <div class="view__head">
+    <div>
+      <h2>Productos</h2>
+      <p class="view__sub">Crea, edita y elimina productos del inventario. El stock baja solo cuando se emite una boleta.</p>
+    </div>
+    <button class="btn btn--primary" type="button" id="btn-nuevo-producto">Nuevo producto</button>
+  </div>
+
+  <div class="filters">
+    <div class="field">
+      <label class="field__label" for="f-prod-buscar">Buscar</label>
+      <input class="input" id="f-prod-buscar" type="search" placeholder="nombre o SKU" />
+    </div>
+    <div class="field">
+      <label class="field__label" for="f-prod-cat">Categoría</label>
+      <select class="input" id="f-prod-cat"><option value="">Todas</option></select>
+    </div>
+    <div class="field">
+      <label class="field__label" for="f-prod-estado">Estado</label>
+      <select class="input" id="f-prod-estado">
+        <option value="">Todos</option>
+        <option value="activo">Activos</option>
+        <option value="inactivo">Inactivos</option>
+        <option value="bajo">Stock bajo</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="table-wrap">
+      <table class="data">
+        <thead>
+          <tr><th>SKU</th><th>Producto</th><th>Categoría</th><th class="num">Precio</th><th class="num">Stock</th><th>Estado</th><th></th></tr>
+        </thead>
+        <tbody id="tbody-productos"></tbody>
+      </table>
+    </div>
+    <div id="empty-productos"></div>
+  </div>
+</main>
+
+
+<script src="../js/store.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/productos.js"></script>
+</body>
+</html>

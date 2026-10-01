@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Categorías · Panel · Punto POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/tokens.css" />
+<link rel="stylesheet" href="../css/app.css" />
+<script src="../vendor/tailwind.js"></script>
+<script src="../js/tw.js"></script>
+</head>
+<body data-shell="admin" data-page="categorias" data-title="Categorías">
+
+<main data-page="categorias" class="view reveal" style="--i:0">
+  <div class="view__head">
+    <div>
+      <h2>Categorías</h2>
+      <p class="view__sub">Agrupan los productos del inventario y sirven para filtrar en el punto de venta y en los reportes.</p>
+    </div>
+    <button class="btn btn--primary" type="button" id="btn-nueva-categoria">Nueva categoría</button>
+  </div>
+
+  <div class="panel">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>Categoría</th><th class="num">Productos</th><th class="num">Valor inventario</th><th></th></tr></thead>
+        <tbody id="tbody-categorias"></tbody>
+      </table>
+    </div>
+    <div id="empty-categorias"></div>
+  </div>
+</main>
+
+
+<script src="../js/store.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/categorias.js"></script>
+</body>
+</html>

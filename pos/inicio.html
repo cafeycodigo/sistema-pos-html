@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Inicio · Punto de venta · Punto POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/tokens.css" />
+<link rel="stylesheet" href="../css/app.css" />
+<script src="../vendor/tailwind.js"></script>
+<script src="../js/tw.js"></script>
+</head>
+<body data-shell="pos" data-page="inicio" data-title="Inicio">
+
+<main data-page="inicio" class="view reveal" style="--i:0; max-width:70rem; margin-inline:auto;">
+  <div class="view__head">
+    <div>
+      <p class="label">Turno abierto</p>
+      <h2 id="saludo">Punto de venta</h2>
+      <p class="view__sub">Revisa el inventario o abre una venta nueva. Todo lo que cobres queda registrado como boleta.</p>
+    </div>
+    <span class="chip chip--ok"><i class="badge-dot" aria-hidden="true"></i> Sesión activa</span>
+  </div>
+
+  <div class="quick">
+    <a class="quick__item" href="productos.html">
+      <span class="quick__title">Ver productos</span>
+      <span class="quick__meta">inventario en solo lectura</span>
+    </a>
+    <a class="quick__item" href="categorias.html">
+      <span class="quick__title">Ver categorías</span>
+      <span class="quick__meta">agrupación del catálogo</span>
+    </a>
+    <a class="quick__item" href="venta.html" style="border-color: var(--color-accent-text)">
+      <span class="quick__title" style="color: var(--color-accent-text)">Iniciar venta</span>
+      <span class="quick__meta">abrir el carrito y cobrar</span>
+    </a>
+    <button class="quick__item" type="button" id="salir">
+      <span class="quick__title">Salir</span>
+      <span class="quick__meta">cerrar esta sesión</span>
+    </button>
+  </div>
+
+  <div class="stat-strip" id="kpis"></div>
+
+  <div class="panel">
+    <div class="panel__head">
+      <div>
+        <h3>Boletas de hoy</h3>
+        <p class="text-sm muted">Tus ventas del turno en curso.</p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>Boleta</th><th>Hora</th><th>Cliente</th><th>Pago</th><th class="num">Total</th></tr></thead>
+        <tbody id="tbody-hoy"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script src="../js/store.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/pos-inicio.js"></script>
+</body>
+</html>

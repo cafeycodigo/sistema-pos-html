@@ -1,0 +1,95 @@
+/* Hallmark · tokens · theme: Cobalt · genre: modern-minimal
+ * paper oklch(98.5% 0.004 250) · accent oklch(58% 0.20 256) electric cobalt
+ * display: Space Grotesk · body: Inter · outlier: JetBrains Mono
+ * axes: light paper / grotesk-sans / cool accent
+ */
+
+:root {
+  /* --- colour ------------------------------------------------------ */
+  --color-paper:       oklch(98.5% 0.004 250);
+  --color-paper-2:     oklch(97.2% 0.005 250);
+  --color-paper-3:     oklch(95.6% 0.006 250);
+  --color-rule:        oklch(90.5% 0.006 250);
+  --color-rule-2:      oklch(85.5% 0.009 251);
+  --color-neutral:     oklch(55.5% 0.015 254);
+  --color-muted:       oklch(48%   0.017 255);
+  --color-ink-2:       oklch(34%   0.018 257);
+  --color-ink:         oklch(24%   0.020 258);
+  --color-graphite:    oklch(22%   0.016 260);
+  --color-graphite-2:  oklch(27%   0.016 260);
+  --color-accent:      oklch(58%   0.200 256);
+  --color-accent-soft: oklch(93%   0.035 256);
+  --color-accent-ink:  oklch(98%   0.006 250);
+  --color-focus:       oklch(58%   0.200 256);
+  --color-success:     oklch(53.5% 0.130 155);
+  --color-error:       oklch(55%   0.190 25);
+  --color-warning:     oklch(72%   0.140 75);
+
+  /* --- derived: estados y superficies (todo color vive aquí) ---------- */
+  --color-accent-text:   oklch(52%  0.200 256);              /* acento como texto sobre papel */
+  --color-accent-solid:  oklch(54%  0.200 256);              /* fondo solido del primario */
+  --color-accent-press:  oklch(50%  0.200 256);              /* hover del primario */
+  --color-error-soft:    oklch(96%   0.020 25);               /* relleno hover del botón destructivo */
+  --color-warning-ink:   oklch(56.5% 0.130 65);               /* texto de aviso sobre papel */
+  --color-rule-accent:   oklch(88%   0.050 256);              /* borde del ítem de rail activo */
+  --color-glass:         oklch(98.5% 0.004 250 / 0.9);        /* topbar esmerilada */
+  --color-scrim:         oklch(24%   0.020 258 / 0.35);       /* velo de los diálogos */
+  --color-on-ink:        oklch(88%   0.020 256);              /* texto sobre grafito */
+  --color-on-ink-strong: oklch(98%   0.006 250 / 0.4);        /* filete sobre grafito */
+  --color-on-ink-rule:   oklch(98%   0.006 250 / 0.12);       /* separador sobre grafito */
+  --color-on-ink-muted:  oklch(72%   0.030 256);              /* etiquetas sobre grafito */
+  --color-on-ink-soft:   oklch(78%   0.030 256);              /* texto secundario sobre grafito */
+
+  /* --- type -------------------------------------------------------- */
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body:    "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
+
+  --text-xs:   0.64rem;
+  --text-sm:   0.8rem;
+  --text-base: 1rem;
+  --text-md:   1.25rem;
+  --text-lg:   1.5625rem;
+  --text-xl:   1.9531rem;
+  --text-2xl:  2.4414rem;
+  --text-3xl:  3.0518rem;
+  --text-display: clamp(2.5rem, 4vw + 1rem, 4.25rem);
+
+  /* --- space (4pt) -------------------------------------------------- */
+  --space-hairline: 1px;
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-sm:  0.75rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  /* --- radius ------------------------------------------------------- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+
+  /* --- motion ------------------------------------------------------- */
+  --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:      cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long:  420ms;
+
+  /* --- elevation (named) -------------------------------------------- */
+  --shadow-whisper: 0 1px 2px oklch(24% 0.02 258 / 0.05);
+
+  /* --- chrome ------------------------------------------------------- */
+  --topbar-h: 60px;
+
+  /* --- z-index ------------------------------------------------------ */
+  --z-base:    1;
+  --z-raised:  10;
+  --z-dropdown: 100;
+  --z-sticky:  200;
+  --z-modal:   400;
+  --z-toast:   500;
+}

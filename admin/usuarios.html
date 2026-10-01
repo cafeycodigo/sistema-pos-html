@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Usuarios · Panel · Punto POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/tokens.css" />
+<link rel="stylesheet" href="../css/app.css" />
+<script src="../vendor/tailwind.js"></script>
+<script src="../js/tw.js"></script>
+</head>
+<body data-shell="admin" data-page="usuarios" data-title="Usuarios">
+
+<main data-page="usuarios" class="view reveal" style="--i:0">
+  <div class="view__head">
+    <div>
+      <h2>Usuarios</h2>
+      <p class="view__sub">Administra cuentas y permisos. Los administradores gestionan todo; los vendedores solo venden.</p>
+    </div>
+    <button class="btn btn--primary" type="button" id="btn-nuevo-usuario">Nuevo usuario</button>
+  </div>
+
+  <div class="panel">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Registro</th><th></th></tr></thead>
+        <tbody id="tbody-usuarios"></tbody>
+      </table>
+    </div>
+    <div id="empty-usuarios"></div>
+  </div>
+</main>
+
+
+<script src="../js/store.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/usuarios.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Usuario · Panel · Punto POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/tokens.css" />
+<link rel="stylesheet" href="../css/app.css" />
+<script src="../vendor/tailwind.js"></script>
+<script src="../js/tw.js"></script>
+</head>
+<body data-shell="admin" data-page="usuarios" data-title="Usuario">
+
+<main data-page="usuarios" class="view reveal" style="--i:0">
+  <div class="view__head">
+    <div>
+      <p class="label" id="f-modo">Nuevo</p>
+      <h2 id="f-titulo">Usuario</h2>
+      <p class="view__sub" id="f-sub">La cuenta decide qué ve la persona: panel completo o solo punto de venta.</p>
+    </div>
+    <a class="btn" href="usuarios.html" id="f-volver">Volver a usuarios</a>
+  </div>
+
+  <form id="form-usuario" novalidate>
+    <input type="hidden" name="registro" />
+    <div class="panel">
+      <div class="panel__head"><h3 id="f-panel">Datos de la cuenta</h3></div>
+      <div class="panel__body form-grid">
+        <div class="field span-2">
+          <label class="field__label" for="u-nombre">Nombre completo</label>
+          <input class="input" id="u-nombre" name="nombre" placeholder="Marta Quilodrán" />
+          <p class="field__help" data-hint="Aparece como vendedor en las boletas.">Aparece como vendedor en las boletas.</p>
+        </div>
+        <div class="field span-2">
+          <label class="field__label" for="u-email">Correo</label>
+          <input class="input" id="u-email" name="email" type="email" placeholder="nombre@aromos.cl" />
+          <p class="field__help" data-hint="Se usa para iniciar sesión.">Se usa para iniciar sesión.</p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="u-password">Contraseña</label>
+          <input class="input" id="u-password" name="password" type="text" placeholder="mínimo 6 caracteres" />
+          <p class="field__help" data-hint="Mínimo 6 caracteres.">Mínimo 6 caracteres.</p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="u-rol">Rol</label>
+          <select class="input" id="u-rol" name="rol">
+            <option value="vendedor">Vendedor</option>
+            <option value="admin">Administrador</option>
+          </select>
+          <p class="field__help" data-hint="El vendedor solo accede al punto de venta.">El vendedor solo accede al punto de venta.</p>
+        </div>
+        <label class="checkline span-2"><input type="checkbox" name="activo" checked /> Cuenta activa</label>
+      </div>
+    </div>
+
+    <div class="form-actions" id="f-acciones">
+      <a class="btn" href="usuarios.html" id="f-cancelar">Cancelar</a>
+      <a class="btn btn--primary" href="usuarios.html" id="f-editar" hidden>Editar usuario</a>
+      <button class="btn btn--primary" type="submit" id="f-guardar">Guardar usuario</button>
+    </div>
+  </form>
+</main>
+
+<script src="../js/store.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/usuario.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Inicio · Panel · Punto POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/tokens.css" />
+<link rel="stylesheet" href="../css/app.css" />
+<script src="../vendor/tailwind.js"></script>
+<script src="../js/tw.js"></script>
+</head>
+<body data-shell="admin" data-page="inicio" data-title="Inicio">
+
+<main data-page="inicio" class="view reveal" style="--i:0">
+  <div class="view__head">
+    <div>
+      <h2 id="saludo">Panel de control</h2>
+      <p class="view__sub">Estado del negocio hoy: ventas, inventario y última actividad de las boletas.</p>
+    </div>
+    <a class="btn" href="reportes.html">Ver reportes de venta</a>
+  </div>
+
+  <div class="stat-strip" id="kpis"></div>
+
+  <div class="quick">
+    <a class="quick__item" href="productos.html">
+      <span class="quick__title">Productos</span>
+      <span class="quick__meta" data-resumen="productos">inventario</span>
+    </a>
+    <a class="quick__item" href="boletas.html">
+      <span class="quick__title">Boletas</span>
+      <span class="quick__meta" data-resumen="boletas">transacciones</span>
+    </a>
+    <a class="quick__item" href="reportes.html">
+      <span class="quick__title">Reportes de venta</span>
+      <span class="quick__meta">por producto, vendedor y fecha</span>
+    </a>
+    <a class="quick__item" href="configuracion.html">
+      <span class="quick__title">Configuración</span>
+      <span class="quick__meta" data-resumen="config">impuestos y pagos</span>
+    </a>
+  </div>
+
+  <div class="panel">
+    <div class="panel__head">
+      <div>
+        <h3>Últimas boletas</h3>
+        <p class="text-sm muted">Se ordenan de más reciente a más antigua.</p>
+      </div>
+      <a class="btn btn--sm" href="boletas.html">Ver todas</a>
+    </div>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>Boleta</th><th>Fecha</th><th>Vendedor</th><th>Cliente</th><th>Pago</th><th class="num">Total</th></tr></thead>
+        <tbody id="tbody-ultimas"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script src="../js/store.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/panel.js"></script>
+</body>
+</html>

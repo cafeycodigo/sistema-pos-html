@@ -1,0 +1,21 @@
+{
+  "scanned_at": "2026-09-30",
+  "signals": {
+    "font_stack": "Space Grotesk (display) + Inter (body) + JetBrains Mono (registro de datos) — css/tokens.css :root",
+    "palette": "custom properties OKLCH en css/tokens.css :root (tema Cobalt, acento oklch(58% 0.20 256))",
+    "motion": "sin librería de animación; transiciones y keyframes propios con fallback prefers-reduced-motion",
+    "spacing": "escala 4pt --space-* en css/tokens.css",
+    "framework": "HTML estático multipágina + Tailwind CDN con config atada a tokens (js/tw.js)"
+  },
+  "preserve": [
+    "font stack",
+    "paleta OKLCH",
+    "escala de espaciado 4pt"
+  ],
+  "introduce": [
+    "macroestructura por vista",
+    "disciplina de microinteracción",
+    "slop-test gates",
+    "tokens derivados (estados, chrome, acento)"
+  ]
+}

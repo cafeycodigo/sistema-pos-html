@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Categoría · Panel · Punto POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/tokens.css" />
+<link rel="stylesheet" href="../css/app.css" />
+<script src="../vendor/tailwind.js"></script>
+<script src="../js/tw.js"></script>
+</head>
+<body data-shell="admin" data-page="categorias" data-title="Categoría">
+
+<main data-page="categorias" class="view reveal" style="--i:0">
+  <div class="view__head">
+    <div>
+      <p class="label" id="f-modo">Nueva</p>
+      <h2 id="f-titulo">Categoría</h2>
+      <p class="view__sub" id="f-sub">Sirve para agrupar productos en el catálogo y en los reportes.</p>
+    </div>
+    <a class="btn" href="categorias.html" id="f-volver">Volver a categorías</a>
+  </div>
+
+  <form id="form-categoria" novalidate>
+    <input type="hidden" name="registro" />
+    <div class="panel">
+      <div class="panel__head"><h3 id="f-panel">Datos de la categoría</h3></div>
+      <div class="panel__body">
+        <div class="field">
+          <label class="field__label" for="c-nombre">Nombre</label>
+          <input class="input" id="c-nombre" name="nombre" placeholder="Bebidas" />
+          <p class="field__help" data-hint="Una o dos palabras, se usa como filtro.">Una o dos palabras, se usa como filtro.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions" id="f-acciones">
+      <a class="btn" href="categorias.html" id="f-cancelar">Cancelar</a>
+      <a class="btn btn--primary" href="categorias.html" id="f-editar" hidden>Editar categoría</a>
+      <button class="btn btn--primary" type="submit" id="f-guardar">Guardar categoría</button>
+    </div>
+  </form>
+</main>
+
+<script src="../js/store.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/categoria.js"></script>
+</body>
+</html>

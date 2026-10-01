@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Configuración · Panel · Punto POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/tokens.css" />
+<link rel="stylesheet" href="../css/app.css" />
+<script src="../vendor/tailwind.js"></script>
+<script src="../js/tw.js"></script>
+</head>
+<body data-shell="admin" data-page="configuracion" data-title="Configuración">
+
+<main data-page="configuracion" class="view reveal" style="--i:0">
+  <div class="view__head">
+    <div>
+      <h2>Configuración</h2>
+      <p class="view__sub">Impuestos, descuentos, métodos de pago habilitados y datos que aparecen en la boleta.</p>
+    </div>
+  </div>
+
+  <form id="form-config" novalidate>
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel__head"><h3>Negocio</h3></div>
+        <div class="panel__body form-grid">
+          <div class="field span-2">
+            <label class="field__label" for="cfg-negocio">Nombre del negocio</label>
+            <input class="input" id="cfg-negocio" name="negocio" required />
+            <p class="field__help" data-hint="Aparece en el encabezado de la boleta.">Aparece en el encabezado de la boleta.</p>
+          </div>
+          <div class="field">
+            <label class="field__label" for="cfg-rut">RUT</label>
+            <input class="input" id="cfg-rut" name="rut" />
+            <p class="field__help" data-hint="Formato 12.345.678-9.">Formato 12.345.678-9.</p>
+          </div>
+          <div class="field">
+            <label class="field__label" for="cfg-direccion">Dirección</label>
+            <input class="input" id="cfg-direccion" name="direccion" />
+            <p class="field__help" data-hint="Calle y número.">Calle y número.</p>
+          </div>
+          <div class="field span-2">
+            <label class="field__label" for="cfg-pie">Texto al pie de la boleta</label>
+            <input class="input" id="cfg-pie" name="pieBoleta" />
+            <p class="field__help" data-hint="Una línea, se imprime bajo el total.">Una línea, se imprime bajo el total.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="panel">
+          <div class="panel__head"><h3>Impuestos y descuentos</h3></div>
+          <div class="panel__body form-grid">
+            <div class="field">
+              <label class="field__label" for="cfg-iva">IVA (%)</label>
+              <input class="input num" id="cfg-iva" name="iva" type="number" min="0" max="35" step="1" />
+              <p class="field__help" data-hint="Se informa como incluido en el precio.">Se informa como incluido en el precio.</p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="cfg-descuento">Descuento global (%)</label>
+              <input class="input num" id="cfg-descuento" name="descuento" type="number" min="0" max="50" step="1" />
+              <p class="field__help" data-hint="Se aplica a toda venta nueva.">Se aplica a toda venta nueva.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head"><h3>Métodos de pago</h3></div>
+          <div class="panel__body">
+            <label class="checkline"><input type="checkbox" name="efectivo" /> Efectivo con cálculo de cambio</label>
+            <label class="checkline"><input type="checkbox" name="debito" /> Tarjeta de débito</label>
+            <label class="checkline"><input type="checkbox" name="credito" /> Tarjeta de crédito</label>
+            <p class="field__help" data-hint="Al menos uno debe quedar habilitado para poder cobrar.">Al menos uno debe quedar habilitado para poder cobrar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-6">
+      <button class="btn btn--primary" type="submit">Guardar cambios</button>
+      <button class="btn btn--danger" type="button" id="btn-reset">Restablecer datos de ejemplo</button>
+    </div>
+  </form>
+</main>
+
+<script src="../js/store.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/configuracion.js"></script>
+</body>
+</html>

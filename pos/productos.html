@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Productos · Punto de venta · Punto POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/tokens.css" />
+<link rel="stylesheet" href="../css/app.css" />
+<script src="../vendor/tailwind.js"></script>
+<script src="../js/tw.js"></script>
+</head>
+<body data-shell="pos" data-page="productos" data-title="Productos">
+
+<main data-page="productos" class="view reveal" style="--i:0">
+  <div class="view__head">
+    <div>
+      <h2>Productos</h2>
+      <p class="view__sub">Consulta de inventario. Los precios y el stock los administra el administrador del sistema.</p>
+    </div>
+    <div class="row">
+      <a class="btn" href="inicio.html">← Inicio</a>
+      <a class="btn btn--primary" href="venta.html">Iniciar venta</a>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="field">
+      <label class="field__label" for="p-buscar">Buscar</label>
+      <input class="input" id="p-buscar" type="search" placeholder="nombre o SKU" />
+    </div>
+    <div class="field">
+      <label class="field__label" for="p-cat">Categoría</label>
+      <select class="input" id="p-cat"><option value="">Todas</option></select>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>SKU</th><th>Producto</th><th>Categoría</th><th class="num">Precio</th><th class="num">Stock</th></tr></thead>
+        <tbody id="tbody-productos"></tbody>
+      </table>
+    </div>
+    <div id="empty-productos"></div>
+  </div>
+</main>
+
+<script src="../js/store.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/pos-productos.js"></script>
+</body>
+</html>

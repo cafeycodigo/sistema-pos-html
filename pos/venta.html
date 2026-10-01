@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Venta · Punto de venta · Punto POS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/tokens.css" />
+<link rel="stylesheet" href="../css/app.css" />
+<script src="../vendor/tailwind.js"></script>
+<script src="../js/tw.js"></script>
+</head>
+<body data-shell="pos" data-page="venta" data-title="Venta">
+
+<main data-page="venta" class="reveal" style="--i:0">
+
+  <!-- ---------- venta ---------- -->
+  <div id="panel-venta">
+    <div class="pos">
+      <!-- catálogo -->
+      <div class="pos__catalog">
+        <div class="pos__tools">
+          <a class="btn btn--sm" href="inicio.html">← Inicio</a>
+          <input class="input" id="venta-buscar" type="search" placeholder="Buscar producto o escanear SKU" aria-label="Buscar producto" />
+          <select class="input" id="venta-cat" aria-label="Filtrar por categoría" style="max-width:220px"><option value="">Todas las categorías</option></select>
+        </div>
+        <div class="catgrid" id="catalogo"></div>
+        <div id="empty-catalogo"></div>
+      </div>
+
+      <!-- carrito -->
+      <aside class="cart" aria-label="Carrito de compra">
+        <div class="cart__head">
+          <div>
+            <span class="label">Carrito</span>
+            <div class="ink" style="font-family:var(--font-display);font-weight:600" id="venta-cliente-label">Consumidor final</div>
+          </div>
+          <button class="btn btn--sm" type="button" id="btn-cliente">Asociar cliente</button>
+        </div>
+
+        <div class="cart__list" id="carrito"></div>
+
+        <div class="cart__foot">
+          <div class="totals">
+            <div class="totals__row"><span>Subtotal</span><span class="num" id="t-subtotal">$ 0</span></div>
+            <div class="totals__row" id="fila-descuento" hidden><span>Descuento</span><span class="num" id="t-descuento">−$ 0</span></div>
+            <div class="totals__row"><span id="t-iva-label">IVA incluido</span><span class="num" id="t-iva">$ 0</span></div>
+            <div class="totals__row totals__row--grand"><span>Total</span><span class="num" id="t-total">$ 0</span></div>
+          </div>
+          <button class="btn btn--primary w-full" type="button" id="btn-cobrar" disabled>
+            <span class="btn__label">Cobrar</span>
+          </button>
+          <button class="btn btn--quiet w-full" type="button" id="btn-vaciar">Vaciar carrito</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ---------- comprobante ---------- -->
+  <div id="panel-comprobante" hidden style="max-width:52rem;margin-inline:auto;">
+    <div class="view" style="padding:0">
+      <div class="view__head" style="justify-content:center;text-align:center">
+        <div style="text-align:center">
+          <p class="label">Pago aprobado</p>
+          <h2>Boleta emitida</h2>
+          <p class="view__sub" style="margin-inline:auto">El stock ya se descontó y la venta quedó registrada en el panel de administración.</p>
+        </div>
+      </div>
+
+      <div id="comprobante"></div>
+
+      <div class="row" style="justify-content:center">
+        <button class="btn btn--primary" type="button" id="btn-nueva-venta">Iniciar otra venta</button>
+        <button class="btn" type="button" onclick="window.print()">Imprimir comprobante</button>
+        <a class="btn btn--quiet" href="inicio.html">Volver al inicio</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ---------- diálogo de cobro ---------- -->
+<dialog class="sheet" id="dlg-pago" aria-labelledby="dlg-pago-t">
+  <div class="sheet__head">
+    <span class="sheet__title" id="dlg-pago-t">Cobrar</span>
+    <button class="btn btn--quiet btn--sm" type="button" data-close>Cerrar</button>
+  </div>
+
+  <div class="sheet__body">
+    <div class="spread" style="align-items:baseline">
+      <span class="label">Total a pagar</span>
+      <span style="font-family:var(--font-display);font-weight:700;font-size:var(--text-xl);color:var(--color-accent-text)" id="pago-total">$ 0</span>
+    </div>
+
+    <div class="paymethods" id="metodos" role="group" aria-label="Método de pago">
+      <button class="paymethod" type="button" data-metodo="efectivo" aria-pressed="true">Efectivo</button>
+      <button class="paymethod" type="button" data-metodo="debito" aria-pressed="false">Débito</button>
+      <button class="paymethod" type="button" data-metodo="credito" aria-pressed="false">Crédito</button>
+    </div>
+
+    <!-- efectivo -->
+    <div id="panel-efectivo" class="stack" style="gap:0.75rem">
+      <div class="field">
+        <label class="field__label" for="m-recibido">Monto recibido</label>
+        <input class="input num" id="m-recibido" type="number" min="0" step="100" placeholder="20000" aria-describedby="m-recibido-help" />
+        <p class="field__help" id="m-recibido-help" data-hint="Ingresa lo que entrega el cliente.">Ingresa lo que entrega el cliente.</p>
+      </div>
+      <div class="spread" style="background:var(--color-paper-2);border:1px solid var(--color-rule);border-radius:var(--radius-md);padding:0.75rem 1rem">
+        <span class="label">Cambio a devolver</span>
+        <span class="num" id="cambio" style="font-family:var(--font-display);font-weight:600;font-size:var(--text-md);color:var(--color-ink)">$ 0</span>
+      </div>
+      <div class="row" id="billetes"></div>
+    </div>
+
+    <!-- tarjeta -->
+    <div id="panel-tarjeta" class="stack" style="gap:0.75rem" hidden>
+      <div class="field">
+        <label class="field__label" for="t-numero">Número de tarjeta</label>
+        <input class="input mono" id="t-numero" inputmode="numeric" autocomplete="cc-number" placeholder="4417 1234 5678 9010" aria-describedby="t-numero-help" />
+        <p class="field__help" id="t-numero-help" data-hint="16 dígitos.">16 dígitos.</p>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label class="field__label" for="t-nombre">Nombre del titular</label>
+          <input class="input" id="t-nombre" autocomplete="cc-name" placeholder="CAMILA ROJAS" />
+          <p class="field__help" data-hint="Como figura en la tarjeta.">Como figura en la tarjeta.</p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="t-vence">Vencimiento</label>
+          <input class="input mono" id="t-vence" inputmode="numeric" placeholder="09/29" />
+          <p class="field__help" data-hint="Mes y año, formato MM/AA.">Mes y año, formato MM/AA.</p>
+        </div>
+        <div class="field">
+          <label class="field__label" for="t-cvv">CVV</label>
+          <input class="input mono" id="t-cvv" inputmode="numeric" maxlength="4" placeholder="123" />
+          <p class="field__help" data-hint="3 o 4 dígitos al reverso.">3 o 4 dígitos al reverso.</p>
+        </div>
+      </div>
+      <p class="text-xs muted">Simulación de cobro: no se envía a ninguna pasarela de pago.</p>
+    </div>
+  </div>
+
+  <div class="sheet__foot">
+    <button class="btn" type="button" data-close>Cancelar</button>
+    <button class="btn btn--primary" type="button" id="btn-confirmar"><span class="btn__label">Confirmar pago</span></button>
+  </div>
+</dialog>
+
+<!-- ---------- diálogo de cliente ---------- -->
+<dialog class="sheet" id="dlg-cliente" aria-labelledby="dlg-cliente-t">
+  <div class="sheet__head">
+    <span class="sheet__title" id="dlg-cliente-t">Asociar cliente</span>
+    <button class="btn btn--quiet btn--sm" type="button" data-close>Cerrar</button>
+  </div>
+  <div class="sheet__body">
+    <div class="field">
+      <label class="field__label" for="sel-cliente">Cliente de la boleta</label>
+      <select class="input" id="sel-cliente"></select>
+      <p class="field__help" data-hint="Opcional. Si no eliges, la boleta queda con consumidor final.">Opcional. Si no eliges, la boleta queda con consumidor final.</p>
+    </div>
+  </div>
+  <div class="sheet__foot">
+    <button class="btn" type="button" data-close>Cancelar</button>
+    <button class="btn btn--primary" type="button" id="btn-guardar-cliente">Asociar a la venta</button>
+  </div>
+</dialog>
+
+<script src="../js/store.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/venta.js"></script>
+</body>
+</html>
