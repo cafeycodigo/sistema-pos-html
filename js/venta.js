@@ -169,19 +169,42 @@
 
   $("#btn-guardar-cliente").addEventListener("click", function () {
     clienteId = $("#sel-cliente").value || null;
-    $("#venta-cliente-label").textContent = clienteId ? H.cli(clienteId) : "Consumidor final";
+    $("#venta-cliente-label").textContent = nombreCliente();
+    pintarResumen(totales());
     U.cerrar($("#dlg-cliente"));
   });
 
   /* ---------------- cobro ---------------- */
   var dlgPago = $("#dlg-pago");
 
+  function articulos() {
+    return carrito.reduce(function (s, l) { return s + l.cantidad; }, 0);
+  }
+
+  function etiquetaArticulos(n) {
+    return n + (n === 1 ? " artículo" : " artículos");
+  }
+
+  function nombreCliente() {
+    return clienteId ? H.cli(clienteId) : "Consumidor final";
+  }
+
+  function pintarResumen(t) {
+    $("#pago-items").textContent = etiquetaArticulos(articulos());
+    $("#pago-iva").textContent = P.money(t.iva);
+    $("#pago-cliente").textContent = nombreCliente();
+    $("#pago-sub").textContent = etiquetaArticulos(articulos()) + " · " + nombreCliente();
+  }
+
   $("#btn-cobrar").addEventListener("click", function () {
     if (!carrito.length) return;
     var t = totales();
     $("#pago-total").textContent = P.money(t.total);
+    pintarResumen(t);
     $("#m-recibido").value = "";
     $("#cambio").textContent = P.money(0);
+    $("#cambio-wrap").setAttribute("data-state", "ok");
+    $("#cambio-label").textContent = "Cambio a devolver";
     $("#t-numero").value = ""; $("#t-nombre").value = ""; $("#t-vence").value = ""; $("#t-cvv").value = "";
     U.setError($("#m-recibido"), $("#m-recibido-help"), "");
     U.setError($("#t-numero"), $("#t-numero-help"), "");
@@ -203,9 +226,13 @@
 
   function pintarMetodo() {
     var efectivo = metodo === "efectivo";
+    var nombres = { efectivo: "Efectivo", debito: "Débito", credito: "Crédito" };
     $("#panel-efectivo").hidden = !efectivo;
     $("#panel-tarjeta").hidden = efectivo;
-    $("#btn-confirmar").querySelector(".btn__label").textContent = efectivo ? "Confirmar pago" : "Procesar pago";
+    $("#cambio-wrap").hidden = !efectivo;
+    $("#pago-metodo").textContent = nombres[metodo] || metodo;
+    $("#btn-confirmar").querySelector(".btn__label").textContent =
+      (efectivo ? "Confirmar pago · " : "Procesar pago · ") + P.money(totales().total);
   }
 
   $("#metodos").addEventListener("click", function (ev) {
@@ -217,26 +244,49 @@
   });
 
   function renderBilletes(total) {
-    var opciones = [5000, 10000, 20000, 50000].filter(function (b) { return b >= total; });
-    if (!opciones.length) opciones = [Math.ceil(total / 1000) * 1000];
-    $("#billetes").innerHTML = opciones.slice(0, 4).map(function (b) {
-      return '<button class="btn btn--sm" type="button" data-billete="' + b + '">' + P.plain(b) + "</button>";
+    var candidatos = [total, Math.ceil(total / 1000) * 1000];
+    [2000, 5000, 10000, 20000, 50000, 100000].forEach(function (b) { candidatos.push(b); });
+    candidatos.push(Math.ceil(total / 5000) * 5000, Math.ceil(total / 10000) * 10000);
+
+    var vistas = {};
+    var chips = [];
+    candidatos.forEach(function (b) {
+      if (b < total || vistas[b] || chips.length >= 4) return;
+      vistas[b] = 1;
+      chips.push({ v: b, t: chips.length === 0 ? "Exacto" : P.plain(b) });
+    });
+
+    $("#billetes").innerHTML = chips.map(function (c, i) {
+      return '<button class="cash__btn' + (i === 0 ? " cash__btn--exacto" : "") + '" type="button" data-billete="' + c.v + '">' + c.t + "</button>";
     }).join("");
   }
 
   $("#billetes").addEventListener("click", function (ev) {
     var b = ev.target.closest("[data-billete]");
     if (!b) return;
-    $("#m-recibido").value = b.getAttribute("data-billete");
+    $("#m-recibido").value = P.plain(Number(b.getAttribute("data-billete")));
     calcularCambio();
   });
 
+  function digitos(v) {
+    return String(v == null ? "" : v).replace(/\D/g, "");
+  }
+
+  function recibidoActual() {
+    var campo = $("#m-recibido");
+    var d = digitos(campo.value);
+    campo.value = d ? P.plain(Number(d)) : "";
+    return Number(d) || 0;
+  }
+
   function calcularCambio() {
     var t = totales();
-    var recibido = Number($("#m-recibido").value) || 0;
+    var recibido = recibidoActual();
     var cambio = recibido - t.total;
-    $("#cambio").textContent = P.money(Math.max(cambio, 0));
-    $("#cambio").style.color = cambio < 0 ? "var(--color-error)" : "var(--color-ink)";
+    var wrap = $("#cambio-wrap");
+    wrap.setAttribute("data-state", cambio < 0 ? "falta" : "ok");
+    $("#cambio-label").textContent = cambio < 0 ? "Faltan" : "Cambio a devolver";
+    $("#cambio").textContent = P.money(Math.abs(cambio));
     return cambio;
   }
 
@@ -253,7 +303,7 @@
     };
 
     if (metodo === "efectivo") {
-      var recibido = Number($("#m-recibido").value) || 0;
+      var recibido = recibidoActual();
       if (recibido < t.total) {
         U.setError($("#m-recibido"), $("#m-recibido-help"), "El monto recibido es menor que el total. Faltan " + P.money(t.total - recibido) + ".");
         return;

@@ -357,10 +357,15 @@ dialog.sheet[open] { opacity: 1; transform: scale(1); }
 dialog.sheet--sm { width: min(440px, calc(100vw - 2rem)); }
 dialog.sheet::backdrop { background: var(--color-scrim); opacity: 0; transition: opacity var(--dur-short) var(--ease-out); }
 dialog.sheet[open]::backdrop { opacity: 1; }
-dialog.sheet__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--color-rule); }
-dialog.sheet__title { font-family: var(--font-display); font-size: var(--text-md); font-weight: 600; color: var(--color-ink); }
-dialog.sheet__body { padding: var(--space-lg); display: flex; flex-direction: column; gap: var(--space-md); overflow-y: auto; max-height: 60vh; }
-dialog.sheet__foot { display: flex; gap: var(--space-sm); justify-content: flex-end; padding: var(--space-md) var(--space-lg); border-top: 1px solid var(--color-rule); background: var(--color-paper-2); flex-wrap: wrap; }
+dialog.sheet .sheet__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); padding: var(--space-md) var(--space-lg); border-bottom: 1px solid var(--color-rule); }
+dialog.sheet .sheet__head-text { display: flex; flex-direction: column; gap: var(--space-3xs); min-width: 0; }
+dialog.sheet .sheet__title { font-family: var(--font-display); font-size: var(--text-md); font-weight: 600; color: var(--color-ink); letter-spacing: -0.02em; }
+dialog.sheet .sheet__sub { font-size: var(--text-xs); color: var(--color-muted); }
+dialog.sheet .sheet__body { padding: var(--space-lg); display: flex; flex-direction: column; gap: var(--space-md); overflow-y: auto; max-height: 60vh; }
+dialog.sheet .sheet__foot { display: flex; gap: var(--space-sm); justify-content: flex-end; align-items: center; padding: var(--space-md) var(--space-lg); border-top: 1px solid var(--color-rule); background: var(--color-paper-2); flex-wrap: wrap; }
+dialog.sheet .sheet__foot--split { justify-content: space-between; }
+dialog.sheet .sheet__note { font-size: var(--text-xs); color: var(--color-muted); margin-inline-end: auto; }
+dialog.sheet.sheet--pay { width: min(700px, calc(100vw - 2rem)); }
 .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--space-md); }
 .form-grid .span-2 { grid-column: 1 / -1; }
 .form-actions {
@@ -490,22 +495,103 @@ dialog.sheet__foot { display: flex; gap: var(--space-sm); justify-content: flex-
 .totals__row--grand { padding-top: var(--space-xs); margin-top: var(--space-2xs); border-top: 1px solid var(--color-rule); color: var(--color-ink); font-family: var(--font-display); font-size: var(--text-md); font-weight: 600; }
 .totals__row--grand .num { color: var(--color-accent-text); }
 
-.paymethods { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-xs); }
+/* ---------- payment sheet (POS) -------------------------------------------------------- */
+dialog.sheet .sheet__body.pay {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(186px, 230px);
+  gap: var(--space-lg);
+  align-items: start;
+}
+.pay__main { display: flex; flex-direction: column; gap: var(--space-lg); min-width: 0; }
+.block { display: flex; flex-direction: column; gap: var(--space-sm); min-width: 0; }
+
+.paymethods { display: flex; flex-direction: column; gap: var(--space-xs); }
 .paymethod {
-  display: flex; flex-direction: column; align-items: center; gap: var(--space-3xs);
-  min-height: 64px; padding: var(--space-xs);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-sm);
+  min-height: 56px;
+  padding: var(--space-xs) var(--space-sm);
   border: 1px solid var(--color-rule-2);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   background: var(--color-paper);
-  font-size: var(--text-xs); letter-spacing: 0.05em; text-transform: uppercase;
-  color: var(--color-ink-2);
+  text-align: start;
   cursor: pointer;
   transition: border-color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
 }
-.paymethod[aria-pressed="true"] { border-color: var(--color-accent); background: var(--color-accent-soft); color: var(--color-ink); }
+.paymethod__icon { width: 22px; height: 22px; color: var(--color-muted); fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.paymethod__text { display: flex; flex-direction: column; gap: var(--space-3xs); min-width: 0; }
+.paymethod__name { font-family: var(--font-display); font-size: var(--text-sm); font-weight: 600; color: var(--color-ink); letter-spacing: -0.01em; }
+.paymethod__hint { font-size: var(--text-xs); color: var(--color-muted); }
+.paymethod__check { width: 18px; height: 18px; color: var(--color-accent-text); fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: 0; }
+@media (hover: hover) and (pointer: fine) { .paymethod:hover { border-color: var(--color-accent); } }
+.paymethod[aria-pressed="true"] { border-color: var(--color-accent); background: var(--color-accent-soft); }
+.paymethod[aria-pressed="true"] .paymethod__icon { color: var(--color-accent-text); }
+.paymethod[aria-pressed="true"] .paymethod__hint { color: var(--color-ink-2); }
+.paymethod[aria-pressed="true"] .paymethod__check { opacity: 1; }
 .paymethod:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
 .paymethod:active { background: var(--color-paper-3); }
+.paymethod[aria-pressed="true"]:active { background: var(--color-accent-soft); }
 .paymethod[disabled] { opacity: 0.45; cursor: not-allowed; }
+
+/* recibido · pago rápido · cambio */
+.affix { position: relative; display: flex; align-items: center; }
+.affix__mark { position: absolute; inset-inline-start: var(--space-sm); font-family: var(--font-mono); font-size: var(--text-base); color: var(--color-muted); pointer-events: none; }
+.affix__mark--post { inset-inline-start: auto; inset-inline-end: var(--space-sm); font-size: var(--text-xs); letter-spacing: 0.08em; }
+.affix .input { padding-inline: calc(var(--space-sm) + 1.35rem); }
+.input--lg { min-height: 54px; font-size: var(--text-lg); letter-spacing: -0.01em; }
+.input--lg.num { font-family: var(--font-display); font-weight: 600; }
+
+.cash { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+.cash__btn {
+  min-height: 40px;
+  padding: 0 var(--space-sm);
+  border: 1px solid var(--color-rule-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper);
+  color: var(--color-ink-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: border-color var(--dur-micro) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) { .cash__btn:hover { border-color: var(--color-accent); } }
+.cash__btn:active { background: var(--color-paper-3); }
+.cash__btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.cash__btn--exacto { border-color: var(--color-accent); background: var(--color-accent-soft); color: var(--color-accent-text); }
+
+.change {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-rule-2);
+  border-radius: var(--radius-md);
+  background: var(--color-accent-soft);
+  transition: background-color var(--dur-micro) var(--ease-out);
+}
+.change__label { font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-2); }
+.change__value { font-family: var(--font-display); font-size: var(--text-md); font-weight: 700; color: var(--color-accent-text); letter-spacing: -0.02em; }
+.change[data-state="falta"] { background: var(--color-paper-3); }
+.change[data-state="falta"] .change__value { color: var(--color-error); }
+
+/* resumen del cobro */
+.pay__side { display: flex; flex-direction: column; gap: var(--space-md); min-width: 0; }
+.due { display: flex; flex-direction: column; gap: var(--space-3xs); padding: var(--space-md); border-radius: var(--radius-md); background: var(--color-graphite); color: var(--color-on-ink); }
+.due__label { font-size: var(--text-xs); letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-on-ink-muted); }
+.due__value { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 700; color: var(--color-paper); letter-spacing: -0.03em; line-height: 1.1; }
+.due__meta { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-on-ink-soft); }
+.facts { display: flex; flex-direction: column; margin: 0; }
+.facts__row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-sm); padding-block: var(--space-xs); border-bottom: 1px solid var(--color-rule); }
+.facts__row:last-child { border-bottom: none; }
+.facts dt { font-size: var(--text-xs); letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-muted); }
+.facts dd { margin: 0; font-size: var(--text-sm); color: var(--color-ink); text-align: end; overflow-wrap: anywhere; }
+.fact-note { font-size: var(--text-xs); color: var(--color-muted); max-width: 40ch; }
+
+.strip { padding: var(--space-xs) var(--space-sm); border: 1px solid var(--color-rule); border-radius: var(--radius-sm); background: var(--color-paper-2); font-size: var(--text-xs); color: var(--color-muted); max-width: 52ch; }
+.form-grid--tight { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--space-sm); }
 
 /* ---------- receipt ---------------------------------------------------------------- */
 .receipt {
@@ -562,9 +648,16 @@ dialog.sheet__foot { display: flex; gap: var(--space-sm); justify-content: flex-
   .view { padding: var(--space-lg) var(--space-md) var(--space-2xl); }
   .topbar { padding-inline: var(--space-md); }
   .catgrid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); padding: var(--space-md); }
-  .paymethods { grid-template-columns: 1fr; }
   .stat-strip { grid-template-columns: minmax(0, 1fr); }
   .row-actions { justify-content: flex-start; }
+}
+
+@media (max-width: 46rem) {
+  dialog.sheet .sheet__body.pay { grid-template-columns: minmax(0, 1fr); gap: var(--space-md); }
+  .pay__side { order: -1; }
+  .pay__side .fact-note { max-width: none; }
+  dialog.sheet .sheet__foot--split { justify-content: flex-end; }
+  dialog.sheet .sheet__note { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

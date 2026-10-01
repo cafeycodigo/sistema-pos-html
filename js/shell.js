@@ -61,10 +61,11 @@
       var fila = P.remove(cola, id);
       if (!fila) return;
       refrescar();
+      contar();
       U.toast(label + " eliminado.", {
         tone: "undo",
         dwell: 7000,
-        action: { label: "Deshacer", run: function () { P.restore(cola, fila); refrescar(); } }
+        action: { label: "Deshacer", run: function () { P.restore(cola, fila); refrescar(); contar(); } }
       });
     };
     var dlg = document.getElementById("dlg-confirmar");
