@@ -271,13 +271,10 @@ window.addEventListener("load", function () {
   setTimeout(function () {
     var d = document.getElementById("dlg-pago");
     var r = d.getBoundingClientRect();
-    var pay = d.querySelector(".pay");
-    var pr = pay.getBoundingClientRect();
     document.getElementById("pago-sub").textContent =
-      "W=" + window.innerWidth + " scrollW=" + document.documentElement.scrollWidth +
-      " dlg=" + Math.round(r.left) + "/" + Math.round(r.width) +
-      " pay=" + Math.round(pr.left) + "/" + Math.round(pr.width);
-  }, 1500);
+      "vw=" + window.innerWidth + " scrollW=" + document.documentElement.scrollWidth +
+      " dlg=" + Math.round(r.left) + "/" + Math.round(r.width);
+  }, 1200);
 });
 </script>
 </body>
